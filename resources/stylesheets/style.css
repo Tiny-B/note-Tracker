@@ -23,7 +23,7 @@ html {
   gap: 20px;
   height: fit-content;
   background-color: rgb(207, 233, 255);
-  border-bottom: 2px solid white;
+  border-bottom: 2px solid rgb(153, 206, 255);
 }
 
 .navbar h1 {
@@ -34,4 +34,21 @@ html {
 
 .navbar img {
   width: 50px;
+}
+
+.main-container {
+  height: 1000px;
+  justify-content: flex-start;
+}
+
+.sidebar {
+  height: 100%;
+  width: 20%;
+  background-color: rgb(207, 233, 255);
+  border-right: 2px solid rgb(153, 206, 255);
+}
+
+.notes-container {
+  height: 100%;
+  width: 100%;
 }
