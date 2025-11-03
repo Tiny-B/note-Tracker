@@ -1,0 +1,17 @@
+[
+  {
+    "id": "13d9c1ca-3489-452f-b230-f6c528fc4fcb",
+    "name": "First note",
+    "content": "This is a sample note for testing the server API."
+  },
+  {
+    "id": "707bdc48-0be2-4319-a5fb-fe79cc9a0dfa",
+    "name": "A new note",
+    "content": "A new note to be added to the data."
+  },
+  {
+    "id": "26e44dab-dc43-49cc-82a8-133faff5255a",
+    "name": "Something else",
+    "content": "Edited data."
+  }
+]
