@@ -28,9 +28,20 @@ const writeData = data => {
 	fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2));
 };
 
+// gets all notes
 app.get('/notes', (req, res) => {
 	const data = readData();
 	res.json(data);
+});
+
+// gets specific note
+app.get('/notes/:id', (req, res) => {
+	const data = readData();
+	const index = data.findIndex(item => item.id === req.params.id);
+	if (index == -1) {
+		return res.status(404).json({ message: 'Data not found' });
+	}
+	res.json(data[index]);
 });
 
 // Handle POST request to save new data with a unique ID
@@ -42,7 +53,7 @@ app.post('/notes', (req, res) => {
 	res.json({ message: 'Note saved successfully', note: newNote });
 });
 
-// Edit data
+// Edit note
 app.put('/notes/:id', (req, res) => {
 	const data = readData();
 	const index = data.findIndex(item => item.id === req.params.id);
@@ -54,6 +65,19 @@ app.put('/notes/:id', (req, res) => {
 	writeData(data);
 });
 
+// delete note
+app.delete('/notes/:id', (req, res) => {
+  const data = readData();
+	const index = data.findIndex(item => item.id === req.params.id);
+	if (index == -1) {
+		return res.status(404).json({ message: 'Data not found' });
+	}
+  res.json({ message: 'Data deleted', data: data[index] });
+  data.splice(index, 1);
+  writeData(data);
+})
+
+// // catch routes not coded
 // app.all('*', (req, res) => {
 // 	res.status(404).send('Route not found');
 // });
