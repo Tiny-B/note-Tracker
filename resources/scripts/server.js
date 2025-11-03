@@ -46,7 +46,8 @@ app.get('/notes/:id', (req, res) => {
 
 // Handle POST request to save new data with a unique ID
 app.post('/notes', (req, res) => {
-	const newNote = { id: uuidv4(), ...req.body };
+  const date = new Date().toUTCString();
+	const newNote = { id: uuidv4(), date: date, ...req.body };
 	const currentData = readData();
 	currentData.push(newNote);
 	writeData(currentData);

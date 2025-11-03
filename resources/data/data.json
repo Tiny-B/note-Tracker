@@ -1,12 +1,8 @@
 [
-  {
-    "id": "13d9c1ca-3489-452f-b230-f6c528fc4fcb",
-    "name": "First note",
-    "content": "This is a sample note for testing the server API."
-  },
-  {
-    "id": "707bdc48-0be2-4319-a5fb-fe79cc9a0dfa",
-    "name": "A new note",
-    "content": "A new note to be added to the data."
-  }
+	{
+		"id": "98af0cb5-6cf8-465e-a50d-de2a0b22ac83",
+		"date": "Mon, 03 Nov 2025 17:56:14 GMT",
+		"name": "Sample Note",
+		"content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, sequi molestiae ea ut expedita ex, natus in laborum aliquam dolor molestias libero debitis facilis possimus non animi maxime labore iusto harum est consequatur quidem adipisci fugit! Illum tempora quo, temporibus ex sapiente nisi dolore numquam, accusamus sed cum eveniet! Repellendus qui odit aut unde a. At repudiandae similique culpa consectetur in deleniti? Voluptatem blanditiis numquam dolor quos placeat a unde atque, qui architecto! Inventore officiis consectetur est eum aspernatur repellat repudiandae incidunt cumque mollitia pariatur sit rerum nulla ullam soluta ab voluptas rem, quibusdam tempore perferendis tenetur. Tempore, eos sunt!"
+	}
 ]
