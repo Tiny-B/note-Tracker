@@ -17,6 +17,7 @@ const cancelBtn = document.getElementById('cancel-btn');
 const confirmBtn = document.getElementById('confirm-btn');
 const editBtn = document.getElementById('edit-btn');
 const deleteBtn = document.getElementById('delete-btn');
+const editConfirmBtn = document.getElementById('edit-confirm-btn');
 
 const titleInputField = document.getElementById('user-title');
 const contentInputField = document.getElementById('user-content');
@@ -80,6 +81,28 @@ const postNoteData = async data => {
 	}
 };
 
+const updateNoteData = async (id, data) => {
+	try {
+		const response = await fetch(`http://localhost:3001/notes/${id}`, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+			},
+			body: JSON.stringify(data),
+		});
+
+		if (!response.ok) {
+			throw new Error(`${response.status} - ${response.statusText}`);
+		}
+
+		console.log(response);
+		return await response.json();
+	} catch (err) {
+		console.error(err);
+	}
+};
+
 const confirmCreation = () => {
 	if (
 		titleInputField.textContent === '' ||
@@ -93,6 +116,30 @@ const confirmCreation = () => {
 	};
 
 	postNoteData(noteData);
+};
+
+const confirmEdit = () => {
+	id = noteIDLabel.textContent;
+	const index = notes.findIndex(item => item.id === id);
+
+	editedNote = {
+		name: noteViewerElements[1].textContent,
+		content: noteViewerElements[2].textContent,
+	};
+
+	updateNoteData(id, editedNote);
+};
+
+const editNote = () => {
+	noteViewerElements[1].setAttribute('contenteditable', 'true');
+	noteViewerElements[2].setAttribute('contenteditable', 'true');
+
+	noteViewerElements[1].style.border = '2px solid rgb(204, 204, 255)';
+	noteViewerElements[2].style.border = '2px solid rgb(204, 204, 255)';
+
+	editBtn.setAttribute('disabled', 'true');
+	deleteBtn.setAttribute('disabled', 'true');
+	editConfirmBtn.style.display = 'block';
 };
 
 const createNote = () => {
@@ -165,11 +212,20 @@ const populateNoteCards = async () => {
 backBtn.onclick = function () {
 	allNotes.style.display = 'block';
 	openedNote.style.display = 'none';
+	noteViewerElements[1].setAttribute('contenteditable', 'false');
+	noteViewerElements[2].setAttribute('contenteditable', 'false');
+	noteViewerElements[1].style.border = 'none';
+	noteViewerElements[2].style.border = 'none';
+	editBtn.removeAttribute('disabled');
+	deleteBtn.removeAttribute('disabled');
+	editConfirmBtn.style.display = 'none';
 };
 
 newNoteBtn.onclick = createNote;
 cancelBtn.onclick = cancelCreation;
 confirmBtn.onclick = confirmCreation;
 deleteBtn.onclick = deleteNote;
+editBtn.onclick = editNote;
+editConfirmBtn.onclick = confirmEdit;
 
 populateNoteCards();
