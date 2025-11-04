@@ -16,12 +16,16 @@ const newNoteBtn = document.getElementsByClassName('new-note-btn')[0];
 const cancelBtn = document.getElementById('cancel-btn');
 const confirmBtn = document.getElementById('confirm-btn');
 
+const titleInputField = document.getElementById('user-title');
+const contentInputField = document.getElementById('user-content');
+
 let notes = [];
 
 const getNotesData = async () => {
 	try {
 		const response = await fetch('http://localhost:3001/notes', {
-			headers: { method: 'GET', Accept: 'application/json' },
+			method: 'GET',
+			headers: { Accept: 'application/json' },
 		});
 
 		if (!response.ok) {
@@ -32,6 +36,43 @@ const getNotesData = async () => {
 	} catch (err) {
 		console.error(err);
 	}
+};
+
+const postNoteData = async data => {
+	try {
+		const response = await fetch('http://localhost:3001/notes', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+			},
+			body: JSON.stringify(data),
+		});
+
+		if (!response.ok) {
+			throw new Error(`${response.status} - ${response.statusText}`);
+		}
+
+		console.log(response);
+		return await response.json();
+	} catch (err) {
+		console.error(err);
+	}
+};
+
+const confirmCreation = () => {
+	if (
+		titleInputField.textContent === '' ||
+		contentInputField.textContent === ''
+	)
+		return;
+
+	noteData = {
+		name: titleInputField.textContent,
+		content: contentInputField.textContent,
+	};
+
+	postNoteData(noteData);
 };
 
 const createNote = () => {
@@ -71,7 +112,7 @@ const populateNoteCards = async () => {
 		const { id, name, content } = note;
 
 		const card = document.createElement('div');
-		card.className = 'note-card flex-container';
+		card.className = 'note-card';
 
 		card.onclick = function () {
 			openNote(id);
@@ -93,6 +134,7 @@ const populateNoteCards = async () => {
 		card.appendChild(cardDesc);
 		const more = document.createElement('p');
 		more.textContent = 'Click for more.';
+		more.style.height = 'fit-content';
 		card.appendChild(more);
 
 		notesContainer.appendChild(card);
@@ -106,5 +148,6 @@ backBtn.onclick = function () {
 
 newNoteBtn.onclick = createNote;
 cancelBtn.onclick = cancelCreation;
+confirmBtn.onclick = confirmCreation;
 
 populateNoteCards();
