@@ -1,9 +1,15 @@
+const allNotes = document.getElementsByClassName('all')[0];
+const openedNote = document.getElementsByClassName('open')[0];
 const notesContainer = document.getElementsByClassName('notes-showcase')[0];
+
+const noteIDLabel = document.getElementById('note-id');
+const noteDateLabel = document.getElementById('note-date');
+const wordCountLabel = document.getElementById('word-count');
 
 const getNotesData = async () => {
 	try {
 		const response = await fetch('http://localhost:3001/notes', {
-			headers: { Accept: 'application/json' },
+			headers: { method: 'GET', Accept: 'application/json' },
 		});
 
 		if (!response.ok) {
@@ -18,6 +24,25 @@ const getNotesData = async () => {
 	}
 };
 
+const openNote = async id => {
+	let notes = [];
+	try {
+		notes = await getNotesData();
+	} catch (err) {
+		throw new Error(err);
+	}
+
+	const index = notes.findIndex(item => item.id === id);
+	const { date, name, content } = notes[index];
+
+	allNotes.style.display = 'none';
+	openedNote.style.display = 'block';
+
+	noteIDLabel.textContent = id;
+	noteDateLabel.textContent = date;
+	wordCountLabel.textContent = content.split(' ').length;
+};
+
 const populateNoteCards = async () => {
 	let notes = [];
 	try {
@@ -28,10 +53,14 @@ const populateNoteCards = async () => {
 	console.log(notes);
 
 	notes.forEach(note => {
-		const { name, content } = note;
+		const { id, name, content } = note;
 
 		const card = document.createElement('div');
 		card.className = 'note-card flex-container';
+
+		card.onclick = function () {
+			openNote(id);
+		};
 
 		const cardName = document.createElement('h4');
 		cardName.textContent = name;

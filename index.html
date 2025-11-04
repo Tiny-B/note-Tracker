@@ -31,23 +31,27 @@
 
 		<main>
       <div class="main-container flex-container">
-        <aside class="sidebar">
-          <ul>
-            <li>Note ID: <span id="note-id"></span></li>
-            <li>Date Added: <span id="note-date"></span></li>
-            <li>Word Count: <span id="word-count"></span></li>
-            <li><button id="edit-btn">Edit Note</button></li>
-            <li><button id="delete-btn">Delete Note</button></li>
-          </ul>
-        </aside>
-
-        <div class="notes-container flex-container">
-          <div class="notes-showcase flex-container">
-            <div class="new-note-btn note-card flex-container">
-              +
+        <section class="open">
+          <aside class="sidebar">
+            <ul>
+              <li>Note ID: <span id="note-id"></span></li>
+              <li>Date Added: <span id="note-date"></span></li>
+              <li>Word Count: <span id="word-count"></span></li>
+              <li><button id="edit-btn">Edit Note</button></li>
+              <li><button id="delete-btn">Delete Note</button></li>
+            </ul>
+          </aside>
+        </section>
+        
+        <section class="all">
+          <div class="notes-container flex-container">
+            <div class="notes-showcase flex-container">
+              <div class="new-note-btn note-card flex-container">
+                +
+              </div>
             </div>
           </div>
-        </div>
+        </section>
       </div>
     </main>
 
