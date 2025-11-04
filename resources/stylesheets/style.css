@@ -117,10 +117,13 @@ button {
 }
 
 .note-card h4 {
+  font-size: 1.3rem;
+  font-weight: bold;
   width: 90%;
   text-align: center;
   padding-bottom: 10px;
   border-bottom: 2px solid var(--bord-col);
+  word-wrap: break-word;
 }
 
 .note-card p {

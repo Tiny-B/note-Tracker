@@ -30,7 +30,7 @@ const getNotesData = async () => {
 			method: 'GET',
 			headers: { Accept: 'application/json' },
 		});
-
+		console.log(response);
 		if (!response.ok) {
 			throw new Error(`${response.status} - ${response.statusText}`);
 		}
@@ -50,6 +50,10 @@ const deleteNote = async () => {
 				headers: { Accept: 'application/json' },
 			}
 		);
+
+		allNotes.style.display = 'block';
+		openedNote.style.display = 'none';
+		populateNoteCards();
 
 		if (!response.ok) {
 			throw new Error(`${response.status} - ${response.statusText}`);
@@ -116,11 +120,17 @@ const confirmCreation = () => {
 	};
 
 	postNoteData(noteData);
+
+	titleInputField.textContent = '';
+	contentInputField.textContent = '';
+	mainContainer.style.display = 'block';
+	createNoteContainer.style.display = 'none';
+
+	populateNoteCards();
 };
 
 const confirmEdit = () => {
 	id = noteIDLabel.textContent;
-	const index = notes.findIndex(item => item.id === id);
 
 	editedNote = {
 		name: noteViewerElements[1].textContent,
@@ -128,6 +138,16 @@ const confirmEdit = () => {
 	};
 
 	updateNoteData(id, editedNote);
+
+	noteViewerElements[1].setAttribute('contenteditable', 'false');
+	noteViewerElements[2].setAttribute('contenteditable', 'false');
+
+	noteViewerElements[1].style.border = 'none';
+	noteViewerElements[2].style.border = 'none';
+
+	editBtn.removeAttribute('disabled');
+	deleteBtn.removeAttribute('disabled');
+	editConfirmBtn.style.display = 'none';
 };
 
 const editNote = () => {
@@ -150,6 +170,7 @@ const createNote = () => {
 const cancelCreation = () => {
 	mainContainer.style.display = 'block';
 	createNoteContainer.style.display = 'none';
+	populateNoteCards();
 };
 
 const openNote = id => {
@@ -168,6 +189,13 @@ const openNote = id => {
 };
 
 const populateNoteCards = async () => {
+	notesContainer.innerHTML = '';
+	const createButton = document.createElement('div');
+	createButton.className = 'new-note-btn note-card flex-container';
+	createButton.textContent = '+';
+	createButton.onclick = createNote;
+	notesContainer.appendChild(createButton);
+
 	try {
 		notes = await getNotesData();
 	} catch (err) {
@@ -219,9 +247,10 @@ backBtn.onclick = function () {
 	editBtn.removeAttribute('disabled');
 	deleteBtn.removeAttribute('disabled');
 	editConfirmBtn.style.display = 'none';
+	populateNoteCards();
 };
 
-newNoteBtn.onclick = createNote;
+
 cancelBtn.onclick = cancelCreation;
 confirmBtn.onclick = confirmCreation;
 deleteBtn.onclick = deleteNote;
