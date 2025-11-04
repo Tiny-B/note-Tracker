@@ -11,7 +11,7 @@
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-html, main {
+html, main, body {
   background-color: var(--bg-col);
 }
 
@@ -43,9 +43,7 @@ button {
   width: 50px;
 }
 
-.main-container {
-  justify-content: flex-start;
-}
+
 
 .open {
   display: none;
@@ -128,6 +126,7 @@ button {
 .note-card p {
   width: 90%;
   height: 60%;
+  height: fit-content;
 }
 
 .note-view-container {
@@ -146,4 +145,35 @@ button {
 
 .note-view-container p {
   margin-top: 30px;
+}
+
+.main-container {
+  justify-content: flex-start;
+}
+
+.create {
+  display: none;
+  width: 1000px;
+  height: fit-content;
+  background-color: rgb(233, 255, 255);
+  border: 2px solid var(--bord-col);
+  margin: 30px auto;
+  padding: 30px;
+}
+
+.field {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 2px solid var(--bord-col);
+}
+
+.create h2 {
+  margin-top: 10px;
+  border: 2px solid rgb(204, 204, 255);
+}
+
+.create p {
+  margin-top: 30px;
+  border: 2px solid rgb(204, 204, 255);
+  height: 90%;
 }

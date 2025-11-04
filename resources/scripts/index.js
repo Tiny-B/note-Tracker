@@ -5,10 +5,16 @@ const notesContainer = document.getElementsByClassName('notes-showcase')[0];
 const noteViewerElements = document.getElementsByClassName(
 	'note-view-container'
 )[0].children;
+const createNoteContainer = document.getElementsByClassName('create')[0];
+const mainContainer = document.getElementsByClassName('main-container')[0];
 
 const noteIDLabel = document.getElementById('note-id');
 const noteDateLabel = document.getElementById('note-date');
 const wordCountLabel = document.getElementById('word-count');
+
+const newNoteBtn = document.getElementsByClassName('new-note-btn')[0];
+const cancelBtn = document.getElementById('cancel-btn');
+const confirmBtn = document.getElementById('confirm-btn');
 
 let notes = [];
 
@@ -28,13 +34,14 @@ const getNotesData = async () => {
 	}
 };
 
-const cacheNoteData = async () => {
-	try {
-		notes = await getNotesData();
-	} catch (err) {
-		throw new Error(err);
-	}
-	console.info(notes);
+const createNote = () => {
+	mainContainer.style.display = 'none';
+	createNoteContainer.style.display = 'block';
+};
+
+const cancelCreation = () => {
+	mainContainer.style.display = 'block';
+	createNoteContainer.style.display = 'none';
 };
 
 const openNote = id => {
@@ -52,7 +59,14 @@ const openNote = id => {
 	noteViewerElements[2].textContent = content;
 };
 
-const populateNoteCards = () => {
+const populateNoteCards = async () => {
+	try {
+		notes = await getNotesData();
+	} catch (err) {
+		throw new Error(err);
+	}
+	console.info(notes);
+
 	notes.forEach(note => {
 		const { id, name, content } = note;
 
@@ -77,6 +91,9 @@ const populateNoteCards = () => {
 			cardDesc.textContent = joinedText;
 		}
 		card.appendChild(cardDesc);
+		const more = document.createElement('p');
+		more.textContent = 'Click for more.';
+		card.appendChild(more);
 
 		notesContainer.appendChild(card);
 	});
@@ -87,5 +104,7 @@ backBtn.onclick = function () {
 	openedNote.style.display = 'none';
 };
 
-cacheNoteData();
-setTimeout(populateNoteCards, 2000);
+newNoteBtn.onclick = createNote;
+cancelBtn.onclick = cancelCreation;
+
+populateNoteCards();
