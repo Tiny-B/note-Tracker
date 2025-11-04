@@ -49,11 +49,14 @@ button {
 
 .open {
   display: none;
+  justify-content: flex-start;
+  gap: 50px;
   width: 100%;
   height: 1000px;
 }
 
 .all {
+  
   width: 100%;
   height: 100%;
 }
@@ -75,6 +78,7 @@ button {
 }
 
 .notes-container {
+  margin-top: 50px;
   height: 100%;
   width: 100%;
 }
@@ -124,4 +128,22 @@ button {
 .note-card p {
   width: 90%;
   height: 60%;
+}
+
+.note-view-container {
+  margin: 30px;
+  padding: 30px;
+  width: 1000px;
+  height: 900px;
+  background-color: rgb(233, 255, 255);
+  border: 2px solid var(--bord-col);
+}
+
+.note-view-container h2 {
+  margin-top: 50px;
+  border-bottom: 2px solid var(--bord-col);
+}
+
+.note-view-container p {
+  margin-top: 30px;
 }

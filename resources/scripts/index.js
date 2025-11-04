@@ -1,10 +1,16 @@
 const allNotes = document.getElementsByClassName('all')[0];
 const openedNote = document.getElementsByClassName('open')[0];
+const backBtn = document.getElementById('back-btn');
 const notesContainer = document.getElementsByClassName('notes-showcase')[0];
+const noteViewerElements = document.getElementsByClassName(
+	'note-view-container'
+)[0].children;
 
 const noteIDLabel = document.getElementById('note-id');
 const noteDateLabel = document.getElementById('note-date');
 const wordCountLabel = document.getElementById('word-count');
+
+let notes = [];
 
 const getNotesData = async () => {
 	try {
@@ -16,42 +22,37 @@ const getNotesData = async () => {
 			throw new Error(`${response.status} - ${response.statusText}`);
 		}
 
-		notes = await response.json();
-
-		return notes;
+		return await response.json();
 	} catch (err) {
 		console.error(err);
 	}
 };
 
-const openNote = async id => {
-	let notes = [];
+const cacheNoteData = async () => {
 	try {
 		notes = await getNotesData();
 	} catch (err) {
 		throw new Error(err);
 	}
+	console.info(notes);
+};
 
+const openNote = id => {
 	const index = notes.findIndex(item => item.id === id);
 	const { date, name, content } = notes[index];
 
 	allNotes.style.display = 'none';
-	openedNote.style.display = 'block';
+	openedNote.style.display = 'flex';
 
 	noteIDLabel.textContent = id;
 	noteDateLabel.textContent = date;
 	wordCountLabel.textContent = content.split(' ').length;
+
+	noteViewerElements[1].textContent = name;
+	noteViewerElements[2].textContent = content;
 };
 
-const populateNoteCards = async () => {
-	let notes = [];
-	try {
-		notes = await getNotesData();
-	} catch (err) {
-		throw new Error(err);
-	}
-	console.log(notes);
-
+const populateNoteCards = () => {
 	notes.forEach(note => {
 		const { id, name, content } = note;
 
@@ -81,4 +82,10 @@ const populateNoteCards = async () => {
 	});
 };
 
-populateNoteCards();
+backBtn.onclick = function () {
+	allNotes.style.display = 'block';
+	openedNote.style.display = 'none';
+};
+
+cacheNoteData();
+setTimeout(populateNoteCards, 2000);
