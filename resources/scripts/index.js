@@ -15,6 +15,8 @@ const wordCountLabel = document.getElementById('word-count');
 const newNoteBtn = document.getElementsByClassName('new-note-btn')[0];
 const cancelBtn = document.getElementById('cancel-btn');
 const confirmBtn = document.getElementById('confirm-btn');
+const editBtn = document.getElementById('edit-btn');
+const deleteBtn = document.getElementById('delete-btn');
 
 const titleInputField = document.getElementById('user-title');
 const contentInputField = document.getElementById('user-content');
@@ -33,6 +35,24 @@ const getNotesData = async () => {
 		}
 
 		return await response.json();
+	} catch (err) {
+		console.error(err);
+	}
+};
+
+const deleteNote = async () => {
+	try {
+		const response = await fetch(
+			`http://localhost:3001/notes/${noteIDLabel.textContent}`,
+			{
+				method: 'DELETE',
+				headers: { Accept: 'application/json' },
+			}
+		);
+
+		if (!response.ok) {
+			throw new Error(`${response.status} - ${response.statusText}`);
+		}
 	} catch (err) {
 		console.error(err);
 	}
@@ -135,6 +155,7 @@ const populateNoteCards = async () => {
 		const more = document.createElement('p');
 		more.textContent = 'Click for more.';
 		more.style.height = 'fit-content';
+		more.style.color = 'blue';
 		card.appendChild(more);
 
 		notesContainer.appendChild(card);
@@ -149,5 +170,6 @@ backBtn.onclick = function () {
 newNoteBtn.onclick = createNote;
 cancelBtn.onclick = cancelCreation;
 confirmBtn.onclick = confirmCreation;
+deleteBtn.onclick = deleteNote;
 
 populateNoteCards();
