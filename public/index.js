@@ -34,8 +34,9 @@ const getNotesData = async () => {
 		if (!response.ok) {
 			throw new Error(`${response.status} - ${response.statusText}`);
 		}
-
-		return await response.json();
+		const data = await response.json();
+		console.log('GET', data);
+		return data;
 	} catch (err) {
 		console.error(err);
 	}
@@ -78,7 +79,7 @@ const postNoteData = async data => {
 			throw new Error(`${response.status} - ${response.statusText}`);
 		}
 
-		console.log(response);
+		//console.log(response);
 		return await response.json();
 	} catch (err) {
 		console.error(err);
@@ -100,7 +101,7 @@ const updateNoteData = async (id, data) => {
 			throw new Error(`${response.status} - ${response.statusText}`);
 		}
 
-		console.log(response);
+		//console.log(response);
 		return await response.json();
 	} catch (err) {
 		console.error(err);
@@ -108,6 +109,7 @@ const updateNoteData = async (id, data) => {
 };
 
 const confirmCreation = () => {
+	console.log('Clicked');
 	if (
 		titleInputField.textContent === '' ||
 		contentInputField.textContent === ''
@@ -126,7 +128,10 @@ const confirmCreation = () => {
 	mainContainer.style.display = 'block';
 	createNoteContainer.style.display = 'none';
 
+	console.log('hiiiiiiiiiiiiiiiiiiii');
+	//setTimeout(populateNoteCards, 1000);
 	populateNoteCards();
+	console.log('cards populated');
 };
 
 const confirmEdit = () => {
@@ -201,7 +206,7 @@ const populateNoteCards = async () => {
 	} catch (err) {
 		throw new Error(err);
 	}
-	console.info(notes);
+	console.info('data:', notes);
 
 	notes.forEach(note => {
 		const { id, name, content } = note;
@@ -250,9 +255,12 @@ backBtn.onclick = function () {
 	populateNoteCards();
 };
 
-
 cancelBtn.onclick = cancelCreation;
-confirmBtn.onclick = confirmCreation;
+//confirmBtn.onclick = confirmCreation;
+confirmBtn.addEventListener('click', async e => {
+	e.preventDefault();
+	confirmCreation();
+});
 deleteBtn.onclick = deleteNote;
 editBtn.onclick = editNote;
 editConfirmBtn.onclick = confirmEdit;

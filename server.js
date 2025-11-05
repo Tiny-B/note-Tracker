@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const { Sequelize, DataTypes } = require('sequelize');
 const bodyParser = require('body-parser');
+require('dotenv').config();
 
 const app = express();
 const port = 3001;
@@ -12,21 +13,17 @@ const port = 3001;
 app.use(cors()); // enable CORS for front‑end
 app.use(express.json());
 
-const dataFilePath = path.join(__dirname, '../data/data.json');
-console.info('dataFilePath:', dataFilePath);
-
-const password = 'ranga';
-if (password === '<add your MySQL password here>') {
-	console.error('Please update MySQL password in server.js');
-	process.exit(1);
-}
-
 // Setup Sequelize with MySQL database
-const sequelize = new Sequelize('notes_db', 'wolfie', password, {
-	host: '127.0.0.1',
-	dialect: 'mysql',
-	port: 3306,
-});
+const sequelize = new Sequelize(
+	process.env.DB_NAME,
+	process.env.DB_USER,
+	process.env.DB_PASS,
+	{
+		host: process.env.DB_HOST,
+		dialect: process.env.DB_DIALECT,
+		port: process.env.DB_PORT,
+	}
+);
 
 // Define Post model
 const Note = sequelize.define(
@@ -61,6 +58,9 @@ sequelize
 	.sync()
 	.then(() => console.log('Database & tables created!'))
 	.catch(err => console.error('Database sync error:', err));
+
+app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname, '../stylesheets/style.css')));
 
 // gets all notes
 app.get('/notes', async (req, res) => {
@@ -117,4 +117,4 @@ app.listen(port, () => {
 	console.log(`Server listening on http://localhost:${port}`);
 });
 
-// mysql -u wolfie -p -h 127.0.0.1
+// sudo mysql -u <username> -p -h <host>
