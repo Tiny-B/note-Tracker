@@ -1,10 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const { v4: uuidv4 } = require('uuid');
-const fs = require('fs');
 const path = require('path');
 const { Sequelize, DataTypes } = require('sequelize');
-const bodyParser = require('body-parser');
 require('dotenv').config();
 
 const app = express();
@@ -12,6 +9,8 @@ const port = 3001;
 
 app.use(cors()); // enable CORS for front‑end
 app.use(express.json());
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Setup Sequelize with MySQL database
 const sequelize = new Sequelize(
@@ -58,9 +57,6 @@ sequelize
 	.sync()
 	.then(() => console.log('Database & tables created!'))
 	.catch(err => console.error('Database sync error:', err));
-
-app.use(express.static(path.join(__dirname, 'public')));
-//app.use(express.static(path.join(__dirname, '../stylesheets/style.css')));
 
 // gets all notes
 app.get('/notes', async (req, res) => {
@@ -109,7 +105,7 @@ app.delete('/notes/:id', async (req, res) => {
 });
 
 // // catch routes not coded
-// app.all('*', (req, res) => {
+// app.all('/*', (req, res) => {
 // 	res.status(404).send('Route not found');
 // });
 
