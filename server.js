@@ -15,7 +15,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Setup Sequelize with MySQL database
 const sequelize = process.env.DB_URL
 	? new Sequelize(process.env.DB_URL)
-	: new sequelize(
+	: new Sequelize(
 			process.env.DB_NAME,
 			process.env.DB_USER,
 			process.env.DB_PASS,
