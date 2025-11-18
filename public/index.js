@@ -127,9 +127,6 @@ const confirmCreation = () => {
 	contentInputField.textContent = '';
 	mainContainer.style.display = 'block';
 	createNoteContainer.style.display = 'none';
-
-	console.log('hiiiiiiiiiiiiiiiiiiii');
-	//setTimeout(populateNoteCards, 1000);
 	populateNoteCards();
 	console.log('cards populated');
 };
