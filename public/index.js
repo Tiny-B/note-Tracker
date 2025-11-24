@@ -1,3 +1,5 @@
+require('dotenv').config();
+const PORT = process.env.PORT;
 const allNotes = document.getElementsByClassName('all')[0];
 const openedNote = document.getElementsByClassName('open')[0];
 const backBtn = document.getElementById('back-btn');
@@ -26,7 +28,7 @@ let notes = [];
 
 const getNotesData = async () => {
 	try {
-		const response = await fetch('http://localhost:3002/notes', {
+		const response = await fetch(`http://localhost:${PORT}/notes`, {
 			method: 'GET',
 			headers: { Accept: 'application/json' },
 		});
@@ -45,7 +47,7 @@ const getNotesData = async () => {
 const deleteNote = async () => {
 	try {
 		const response = await fetch(
-			`http://localhost:3002/notes/${noteIDLabel.textContent}`,
+			`http://localhost:${PORT}/notes/${noteIDLabel.textContent}`,
 			{
 				method: 'DELETE',
 				headers: { Accept: 'application/json' },
@@ -66,7 +68,7 @@ const deleteNote = async () => {
 
 const postNoteData = async data => {
 	try {
-		const response = await fetch('http://localhost:3002/notes', {
+		const response = await fetch(`http://localhost:${PORT}/notes`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
