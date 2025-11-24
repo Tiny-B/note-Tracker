@@ -26,7 +26,7 @@ let notes = [];
 
 const getNotesData = async () => {
 	try {
-		const response = await fetch('http://localhost:3002/notes', {
+		const response = await fetch('/notes', {
 			method: 'GET',
 			headers: { Accept: 'application/json' },
 		});
@@ -44,13 +44,10 @@ const getNotesData = async () => {
 
 const deleteNote = async () => {
 	try {
-		const response = await fetch(
-			`http://localhost:3002/notes/${noteIDLabel.textContent}`,
-			{
-				method: 'DELETE',
-				headers: { Accept: 'application/json' },
-			}
-		);
+		const response = await fetch(`/notes/${noteIDLabel.textContent}`, {
+			method: 'DELETE',
+			headers: { Accept: 'application/json' },
+		});
 
 		allNotes.style.display = 'block';
 		openedNote.style.display = 'none';
@@ -66,7 +63,7 @@ const deleteNote = async () => {
 
 const postNoteData = async data => {
 	try {
-		const response = await fetch('http://localhost:3002/notes', {
+		const response = await fetch('/notes', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
