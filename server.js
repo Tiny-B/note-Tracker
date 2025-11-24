@@ -6,7 +6,7 @@ const { Sequelize, DataTypes } = require('sequelize');
 require('dotenv').config();
 
 const app = express();
-const PORT = 3002;
+const PORT = process.env.PORT || 10000;
 
 app.use(cors());
 app.use(express.json());
@@ -57,9 +57,9 @@ const Note = sequelize.define(
 	}
 );
 
-app.listen(() => {
-	console.log(`Server listening on http://localhost:${PORT}`);
-});
+// app.listen(() => {
+// 	console.log(`Server listening on http://localhost:${PORT}`);
+// });
 
 // Sync database
 sequelize
