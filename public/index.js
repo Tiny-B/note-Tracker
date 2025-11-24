@@ -1,5 +1,3 @@
-require('dotenv').config();
-const PORT = process.env.PORT;
 const allNotes = document.getElementsByClassName('all')[0];
 const openedNote = document.getElementsByClassName('open')[0];
 const backBtn = document.getElementById('back-btn');
@@ -14,7 +12,7 @@ const noteIDLabel = document.getElementById('note-id');
 const noteDateLabel = document.getElementById('note-date');
 const wordCountLabel = document.getElementById('word-count');
 
-const newNoteBtn = document.getElementsByClassName('new-note-btn')[0];
+//const newNoteBtn = document.getElementsByClassName('new-note-btn')[0];
 const cancelBtn = document.getElementById('cancel-btn');
 const confirmBtn = document.getElementById('confirm-btn');
 const editBtn = document.getElementById('edit-btn');
@@ -28,7 +26,7 @@ let notes = [];
 
 const getNotesData = async () => {
 	try {
-		const response = await fetch(`http://localhost:${PORT}/notes`, {
+		const response = await fetch('http://localhost:3002/notes', {
 			method: 'GET',
 			headers: { Accept: 'application/json' },
 		});
@@ -47,7 +45,7 @@ const getNotesData = async () => {
 const deleteNote = async () => {
 	try {
 		const response = await fetch(
-			`http://localhost:${PORT}/notes/${noteIDLabel.textContent}`,
+			`http://localhost:3002/notes/${noteIDLabel.textContent}`,
 			{
 				method: 'DELETE',
 				headers: { Accept: 'application/json' },
@@ -68,7 +66,7 @@ const deleteNote = async () => {
 
 const postNoteData = async data => {
 	try {
-		const response = await fetch(`http://localhost:${PORT}/notes`, {
+		const response = await fetch('http://localhost:3002/notes', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

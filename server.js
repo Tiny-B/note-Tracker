@@ -62,12 +62,12 @@ const Note = sequelize.define(
 // });
 
 // Sync database
-sequelize
-	.sync()
-	.then(() => {
-		console.log('Database & tables created!');
-	})
-	.catch(err => console.error('Database sync error:', err));
+// sequelize
+// 	.sync()
+// 	.then(() => {
+// 		console.log('Database & tables created!');
+// 	})
+// 	.catch(err => console.error('Database sync error:', err));
 
 (async () => {
 	try {
